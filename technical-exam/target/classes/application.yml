@@ -8,6 +8,10 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-email-api-key:
-  send-grid: SENDGRID_API_KEY
-  mail-gun: MAILGUN_API_KEY
+email-gateway:
+  send-grid:
+    api-key: SENDGRID_API_KEY
+    url: v3/mail/send
+  mail-gun:
+    api-key: MAILGUN_API_KEY
+    url: v3/mailgun/messages

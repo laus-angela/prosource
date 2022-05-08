@@ -1,47 +1,27 @@
 package email.service.sendgrid;
 
+import email.gateway.MailGateway;
+import email.gateway.MailRequest;
 import email.service.EmailServiceProvider;
 import email.service.Provider;
 import email.web.api.model.EmailNotification;
-import email.web.api.model.Request;
 import email.web.api.model.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class SendGridEmailService implements EmailServiceProvider {
-    // TODO
-//    private final RestTemplate restTemplate;
-
     @Value("${email-gateway.send-grid.api-key}")
     private String apiKey;
 
     @Value("${email-gateway.send-grid.url}")
     private String gatewayUrl;
 
-//    @Builder
-//    private static class SendGrid {
-//        private String apiKey;
-//        private Request request;
-
-//        @Builder
-//        private static class Request {
-//            private HttpMethod method;
-//            private String endpoint;
-//            private String body;
-//        }
-
-//        public static Response api(SendGrid sendGrid) {
-//            return Response.builder()
-//                    .headers("Send Grid Email Service Provider - Sent")
-//                    .body(sendGrid.request.getBody())
-//                    .statusCode(HttpStatus.OK)
-//                    .build();
-//        }
-//    }
+    private final MailGateway gateway;
 
     @Override
     public boolean isApplicable(String provider) {
@@ -50,15 +30,22 @@ public class SendGridEmailService implements EmailServiceProvider {
 
     @Override
     public Response sendEmail(EmailNotification emailNotification) {
-        SendGrid sendGridRequest = SendGrid.builder()
+        MailRequest request = MailRequest.builder()
+                .uri(gatewayUrl)
                 .apiKey(apiKey)
-                .request(Request.builder()
-                        .endpoint(gatewayUrl)
-                        .method(HttpMethod.POST)
-                        .body(emailNotification.getMessage())
-                        .build())
+                .from(emailNotification.getSender())
+                .to(emailNotification.getToRecipients())
+                .subjectLine(emailNotification.getSubjectLine())
+                .message(emailNotification.getMessage())
+                .cc(emailNotification.getCcRecipients())
+                .bcc(emailNotification.getBccRecipients())
                 .build();
 
-        return SendGrid.api(sendGridRequest);
+        emailNotification.setMessage(request.getMessage());
+
+        // temporary static response
+        return Optional.ofNullable(gateway.sendRequest(request))
+                .map(email -> SendGridStaticAPI.api(emailNotification))
+                .orElse(null);
     }
 }

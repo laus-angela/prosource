@@ -1,13 +1,14 @@
 package email.service;
 
+import email.exception.MailServicesOfflineException;
+import email.web.api.model.EmailNotification;
 import email.web.api.model.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jmx.export.notification.UnableToSendNotificationException;
 import org.springframework.stereotype.Service;
-import email.web.api.model.EmailNotification;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -15,11 +16,21 @@ import java.util.List;
 public class EmailService {
     private final List<EmailServiceProvider> emailServiceProviders;
 
-    public Response sendNotification(EmailNotification emailNotification, String provider) {
+    public Response sendToProvider(EmailNotification emailNotification, String provider) {
         emailNotification.validate();
         return emailServiceProviders.stream()
                 .filter(serviceProvider -> serviceProvider.isApplicable(provider))
                 .map(serviceProvider -> serviceProvider.sendEmail(emailNotification))
-                .findFirst().orElseThrow(() -> new UnableToSendNotificationException("No email service provider available."));
+                .filter(Objects::nonNull)
+                .findFirst().orElseThrow(() -> new MailServicesOfflineException("Mail service provider is offline"));
+    }
+
+    public Response send(EmailNotification emailNotification) {
+        emailNotification.validate();
+        return emailServiceProviders.stream()
+                .map(serviceProvider -> serviceProvider.sendEmail(emailNotification))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElseThrow(() -> new MailServicesOfflineException("No email service provider available."));
     }
 }

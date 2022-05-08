@@ -19,6 +19,11 @@ public class EmailNotificationController {
     @PostMapping (value = "/email/notification")
     public Response emailWithProvider(@RequestParam(required = false) String provider,
                                       @Valid @RequestBody(required = false) EmailNotification emailNotification) {
-        return emailService.sendNotification(emailNotification, provider);
+        return emailService.sendToProvider(emailNotification, provider);
+    }
+
+    @PostMapping (value = "/email/notification/send")
+    public Response email(@Valid @RequestBody(required = false) EmailNotification emailNotification) {
+        return emailService.send(emailNotification);
     }
 }

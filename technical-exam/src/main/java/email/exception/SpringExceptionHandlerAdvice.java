@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import email.web.api.error.ErrorMessage;
 
+import javax.naming.ServiceUnavailableException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,6 +38,13 @@ public class SpringExceptionHandlerAdvice {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Map<String, List<ErrorMessage>> handleException(BadRequestException exception) {
+        return createErrorMessage(exception.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
+    public Map<String, List<ErrorMessage>> handleException(MailServicesOfflineException exception) {
         return createErrorMessage(exception.getMessage());
     }
 
