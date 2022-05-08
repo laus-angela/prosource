@@ -1,0 +1,17 @@
+spring:
+  jackson:
+    default-property-inclusion:
+      - non_empty
+      - non_null
+    deserialization:
+      fail-on-unknown-properties: false
+  main:
+    allow-bean-definition-overriding: true
+
+email-gateway:
+  send-grid:
+    api-key: SENDGRID_API_KEY
+    url: v3/mail/send
+  mail-gun:
+    api-key: MAILGUN_API_KEY
+    url: v3/mailgun/messages

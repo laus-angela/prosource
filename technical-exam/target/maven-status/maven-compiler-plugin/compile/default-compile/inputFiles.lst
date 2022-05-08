@@ -1,0 +1,15 @@
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/TechnicalExamApplication.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/web/api/error/ErrorMessage.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/service/EmailServiceProvider.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/exception/BadRequestException.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/gateway/HttpClientConfiguration.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/service/AbstractEmailServiceProvider.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/web/api/model/Response.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/service/MailGunEmailService.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/service/SendGridEmailService.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/web/EmailNotificationController.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/service/DefaultEmailService.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/service/EmailService.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/service/Provider.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/exception/SpringExceptionHandlerAdvice.java
+/Users/angelalaus/Documents/Postman Collections/Ella's Files/code/prosource/technical-exam/src/main/java/email/web/api/model/EmailNotification.java
